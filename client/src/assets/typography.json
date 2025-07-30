@@ -1,0 +1,54 @@
+{
+  "file_comment": "these are the typography styles in figma, with absolute values for sizes, and line height.",
+
+  "Page Title": {
+    "font_family": "Poppins",
+    "font_weight": "Bold",
+    "font_size": "128px",
+    "line_height": "150px"
+  },
+
+  "Page Subtitle": {
+    "font_family": "Poppins",
+    "font_weight": "Medium",
+    "font_size": "36px",
+    "line_height": "45px"
+  },
+
+  "Section Title": {
+    "font_family": "Poppins",
+    "font_weight": "Bold",
+    "font_size": "72px"
+  },
+
+  "Section Subtitle": {
+    "font_family": "Poppins",
+    "font_weight": "Regular",
+    "font_size": "24px"
+  },
+
+  "Button Text": {
+    "font_family": "Poppins",
+    "font_weight": "Regular",
+    "font_size": "20px"
+  },
+
+  "Small Section Title": {
+    "font_family": "Poppins",
+    "font_weight": "Bold",
+    "font_size": "36px",
+    "line_height": "20px"
+  },
+
+  "XS Title": {
+    "font_family": "Poppins",
+    "font_weight": "Bold",
+    "font_size": "24px"
+  },
+
+  "XS Subtitle": {
+    "font_family": "Poppins",
+    "font_weight": "Regular",
+    "font_size": "20px"
+  }
+}

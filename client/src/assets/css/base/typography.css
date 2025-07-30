@@ -1,0 +1,81 @@
+/* Typography Styles */
+/* Fluid typography using clamp() with rem + vw units */
+:root {
+  /* Base font size for calculations (1rem = 16px) */
+  --fluid-min-width: 320;
+  --fluid-max-width: 1920;
+  --fluid-screen: 100vw;
+  --fluid-bp: calc(
+    (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+      (var(--fluid-max-width) - var(--fluid-min-width))
+  );
+}
+
+/* Typography Classes */
+.page-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: clamp(3.75rem, 7vw + 0.5rem, 7.5rem);
+  line-height: 1;
+}
+
+.page-subtitle {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.8vw + 0.4rem, 1.9rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+
+.section-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw + 0.5rem, 3.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  font-size: clamp(0.75rem, 0.8vw + 0.5rem, 1.2rem);
+  line-height: 1.5;
+  letter-spacing: 0.1rem;
+}
+
+.since {
+  font-family: var(--font-primary);
+  font-weight: 200;
+  font-size: clamp(1.25rem, 1.6vw + 0.4rem, 1.9rem);
+  line-height: 1;
+}
+
+.small-section-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 2.4vw + 0.4rem, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.xs-title {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: clamp(0.75rem, 0.8vw + 0.5rem, 1.7rem);
+  line-height: 1.25;
+  letter-spacing: 0.03rem;
+}
+
+.xs-subtitle {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.125vw + 0.5rem, 1.5rem);
+  line-height: 1.5;
+}
+
+.navigation-text {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: clamp(0.75rem, 0.7vw + 0.4rem, 1rem);
+  line-height: 1.5;
+}

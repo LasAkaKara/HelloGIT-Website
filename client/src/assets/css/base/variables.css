@@ -1,0 +1,43 @@
+/* Design System CSS Variables */
+:root {
+  /* Colors */
+  --color-background: #ffffff;
+  --color-text: #000000;
+  --color-primary: #205172;
+  --color-secondary: #e0e0e0;
+  --color-secondary-blue: #0640ae;
+  --color-tertiary: #349c9d; 
+  
+
+  /* Typography */
+  --font-primary: "Poppins", -apple-system, Roboto, Helvetica, sans-serif;
+  --font-secondary: "Inter", -apple-system, Roboto, Helvetica, sans-serif;
+  --font-body: "Roboto", -apple-system, Roboto, Helvetica, sans-serif;
+
+  /* Font Sizes */
+  --font-xs: 1.25rem;   /* 20px */
+  --font-sm: 1.5rem;    /* 24px */
+  --font-base: 2.25rem; /* 36px */
+  --font-lg: 3rem;      /* 48px */
+  --font-xl: 4.5rem;    /* 72px */
+  --font-xxl: 8rem;     /* 128px */
+  
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+
+  /* Border Radius */
+  --radius-base: 1.5625rem;      /* 25px */
+  --radius-button: 1.78125rem;   /* 28.5px */
+  --radius-full: 9999px;
+}
+

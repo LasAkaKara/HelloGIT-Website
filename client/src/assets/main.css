@@ -1,0 +1,95 @@
+/* Main CSS File - Modular Architecture */
+@import "tailwindcss";
+/* =========================
+   Base & Foundation Styles
+   ========================= */
+@import "./css/base/variables.css";
+@import "./css/base/typography.css";
+
+/* =========================
+   Component Styles
+   ========================= */
+@import "./css/components/buttons.css";
+@import "./css/components/cards.css";
+@import "./css/components/forms.css";
+@import "./css/components/dropdown.css";
+@import "./css/components/footer.css";
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-text: #000000;
+  --color-primary: #205172;
+  --color-secondary: #e0e0e0;
+  --color-secondary-blue: #0640ae;
+  --color-tertiary: #349c9d;
+}
+
+/* CSS Main */
+
+.body-container {
+  max-width: 100vw;
+}
+
+/* Button */
+.btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 5rem;
+  padding: calc(0.3vw + 0.6rem) calc(1vw + 0.6rem);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(44, 95, 126, 0.2);
+
+  font-family: var(--font-primary);
+  font-weight: 200;
+  font-size: clamp(1.25rem, 1.125vw + 0.5rem, 1.625rem);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.btn:hover {
+  background-color: #1e4357;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(44, 95, 126, 0.3);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(44, 95, 126, 0.2);
+}
+
+.arrow {
+  font-size: clamp(1.25rem, 1.125vw + 0.5rem, 1.625rem);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* media queries */
+@media (max-width: 48rem) {
+  .body-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .body-container {
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .body-container {
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
+  }
+}
