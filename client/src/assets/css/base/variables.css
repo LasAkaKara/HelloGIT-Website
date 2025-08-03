@@ -6,7 +6,10 @@
   --color-primary: #205172;
   --color-secondary: #e0e0e0;
   --color-secondary-blue: #0640ae;
-  --color-tertiary: #349c9d; 
+  --color-tertiary: #349c9d;
+  --color-project-gradient-start: #287A86;
+  --color-project-gradient-end: #CCF1D0;
+  --color-project-overlay: rgba(30, 30, 30, 0.22); 
   
 
   /* Typography */
@@ -40,4 +43,3 @@
   --radius-button: 1.78125rem;   /* 28.5px */
   --radius-full: 9999px;
 }
-

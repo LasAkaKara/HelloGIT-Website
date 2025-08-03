@@ -6,15 +6,6 @@
 @import "./css/base/variables.css";
 @import "./css/base/typography.css";
 
-/* =========================
-   Component Styles
-   ========================= */
-@import "./css/components/buttons.css";
-@import "./css/components/cards.css";
-@import "./css/components/forms.css";
-@import "./css/components/dropdown.css";
-@import "./css/components/footer.css";
-
 @theme inline {
   --color-background: #ffffff;
   --color-text: #000000;

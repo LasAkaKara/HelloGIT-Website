@@ -1,21 +1,21 @@
 // server/routes/posts.js
-import express from 'express';
-import {getAllPosts,createPost} from '../controllers/post.controllers.js';
-const router=express.Router();
+import express from "express";
+import {
+  getAllPosts,
+  createPost,
+  getPostById,
+  updatePost,
+  deletePost,
+} from "../controllers/post.controllers.js";
+import { authorizeRole, verifyToken } from "../middlewares/auth.middlewares.js";
+const router = express.Router();
 
-router.get('/',getAllPosts);
-router.post('/', createPost);
-
-router.get('/:id',async (req,res)=>{
-    try {
-        const post = await Post.findById(req.params.id);
-        if (!post) {
-            return res.status(404).json({msg: 'Post not found'});
-        }
-        res.json(post);
-    } catch (err) {
-        res.status(500).json({msg: 'Failed to fetch post'});
-    }
-});
+router.get("/", getAllPosts);
+router.get("/:id", getPostById);
+router.post("/", verifyToken, authorizeRole("member", "admin"), createPost);
+router
+  .route("/:id")
+  .put(verifyToken, authorizeRole("member", "admin"), updatePost)
+  .delete(verifyToken, authorizeRole("member", "admin"), deletePost);
 
 export default router;

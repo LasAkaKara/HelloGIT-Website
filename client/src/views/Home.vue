@@ -4,7 +4,7 @@
   <div class="space-y-8 md:space-y-20" id="home">
     <section
       class="md:mx-6 lg:mx-12 relative w-full h-[35vh] md:h-[87vh] md:rounded-4xl overflow-hidden bg-cover bg-center"
-      style="background-image: url('../../public/images/hero-background.png')"
+      style="background-image: url('/images/hero-background.png')"
       id="hero"
     >
       <!-- Overlay -->
@@ -39,7 +39,7 @@
       <div class="container grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div class="flex flex-col items-center">
           <img
-            src="../../public/images/lastest_event.png"
+            src="/images/lastest_event.png"
             alt="Latest Event"
             class="rounded-3xl md:max-h-[87vh] w-full object-cover"
           />
@@ -164,7 +164,7 @@
             class="relative rounded-2xl overflow-hidden h-full min-h-[300px] md:min-h-[400px]"
           >
             <img
-              src="../../public/images/gallery-1.jpg"
+              src="/images/gallery-1.png"
               alt="Students working"
               class="w-full h-full object-cover"
             />
@@ -190,7 +190,7 @@
             class="relative rounded-2xl overflow-hidden h-full min-h-[300px] md:min-h-[400px]"
           >
             <img
-              src="../../public/images/gallery-2.jpg"
+              src="/images/gallery-2.jpeg"
               alt="Architecture"
               class="w-full h-full object-cover"
             />
@@ -217,7 +217,7 @@
             class="relative rounded-2xl overflow-hidden h-full min-h-[250px]"
           >
             <img
-              src="../../public/images/gallery-3.jpg"
+              src="/images/gallery-3.png"
               alt="Student working"
               class="w-full h-full object-cover"
             />
@@ -243,7 +243,7 @@
             class="relative rounded-2xl overflow-hidden h-full min-h-[250px]"
           >
             <img
-              src="../../public/images/gallery-4.jpg"
+              src="/images/gallery-4.png"
               alt="Architecture view"
               class="w-full h-full object-cover"
             />
@@ -269,7 +269,7 @@
             class="relative rounded-2xl overflow-hidden h-full min-h-[250px]"
           >
             <img
-              src="../../public/images/gallery-5.jpg"
+              src="/images/gallery-5.jpeg"
               alt="Student portrait"
               class="w-full h-full object-cover"
             />

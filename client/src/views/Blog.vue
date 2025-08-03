@@ -1,405 +1,262 @@
 <template>
-  <div class="blog-page">
-    <AppHeader />
+  <Header />
 
-    <!-- Hero Section -->
-    <section class="blog-hero">
-      <h1 class="blog-hero-title">Blogs</h1>
-    </section>
-
-    <!-- Search Section -->
-    <section class="blog-search-section">
-      <div class="blog-search-container">
-        <div class="blog-search-bar">
-          <svg class="blog-search-icon" viewBox="0 0 24 24" fill="none">
-            <circle
-              cx="11"
-              cy="11"
-              r="8"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" />
-          </svg>
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="blog-search-input"
-            placeholder="Search blogs..."
-            @input="handleSearch"
-          />
-        </div>
-
-        <div class="blog-filters">
-          <div class="blog-filter-group">
-            <span class="blog-filter-label">Sort by:</span>
-            <button
-              v-for="sortOption in sortOptions"
-              :key="sortOption.value"
-              class="blog-filter-btn"
-              :class="{ active: currentSort === sortOption.value }"
-              @click="handleSort(sortOption.value)"
-            >
-              {{ sortOption.label }}
-            </button>
-          </div>
-
-          <div class="blog-filter-group">
-            <span class="blog-filter-label">Category:</span>
-            <button
-              v-for="category in categories"
-              :key="category"
-              class="blog-filter-btn"
-              :class="{ active: currentCategory === category }"
-              @click="handleCategoryFilter(category)"
-            >
-              {{ category }}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Results Summary -->
-      <div class="blog-results" v-if="!loading">
-        <p class="blog-results-text">
-          Showing
-          <span class="blog-results-count">{{ paginatedBlogs.length }}</span> of
-          <span class="blog-results-count">{{ filteredBlogs.length }}</span>
-          blogs
+  <div class="body-container bg-white">
+    <!-- Page Header -->
+    <section class="flex w-full py-8 mb-6">
+      <div class="flex flex-col justify-center items-start w-full gap-2">
+        <p class="page-title">Blogs</p>
+        <p class="page-subtitle">
+          Explore the latest updates, tech insights and stories from our
+          writers.
         </p>
       </div>
     </section>
 
-    <!-- Loading State -->
-    <div v-if="loading" class="blog-loading">
-      <div class="blog-loading-spinner"></div>
-      <p class="blog-loading-text">Loading blogs...</p>
-    </div>
+    <!-- Create Blog Button -->
+    <button v-if="isAuthorized" @click="handleCreateBlog" class="btn mb-6">
+      Create Blog Post
+    </button>
 
-    <!-- Blog Grid -->
-    <section v-else-if="paginatedBlogs.length > 0" class="blog-grid">
-      <BlogCard
-        v-for="blog in paginatedBlogs"
-        :key="blog.id"
-        :blog="blog"
-        @click="handleBlogClick(blog)"
-      />
+    <!-- Search + Sort + Filter -->
+    <section class="w-full mb-8">
+      <!-- Search & Sort Row -->
+      <div class="flex flex-col md:flex-row gap-4 w-full mb-4">
+        <!-- Search Bar -->
+        <SearchBar
+          v-model="searchQuery"
+          placeholder="Search blogs..."
+          @search="handleSearch"
+        />
+
+        <!-- Sort Button -->
+        <button
+          @click="toggleSort"
+          class="h-12 md:h-14 px-4 md:px-6 rounded-3xl border border-primary-blue flex items-center justify-center gap-2 whitespace-nowrap transition-colors"
+          :class="
+            sortByNewest
+              ? 'bg-primary-blue text-white'
+              : 'bg-white text-primary-blue'
+          "
+        >
+          <span class="text-sm md:text-base lg:text-lg">Sort by newest</span>
+          <img
+            src="/icons/sort.png"
+            alt="sort"
+            class="w-4 h-4 md:w-5 md:h-5"
+            :class="{ 'rotate-180': !sortByNewest }"
+          />
+        </button>
+      </div>
+
+      <!-- Filters Row -->
+      <div class="flex flex-wrap gap-3 w-full">
+        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
+          <FilterDropdown
+            v-model="selectedCategory"
+            :options="categoryOptions"
+            :label="selectedCategory === 'All categories' ? 'Category' : ''"
+            :icon-src="
+              selectedCategory === 'All categories' ? '/icons/tag.png' : ''
+            "
+            variant="secondary"
+          />
+        </div>
+      </div>
     </section>
 
-    <!-- Empty State -->
-    <div v-else class="blog-empty-state">
-      <svg class="blog-empty-icon" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <polyline
-          points="14,2 14,8 20,8"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <line
-          x1="16"
-          y1="13"
-          x2="8"
-          y2="13"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <line
-          x1="16"
-          y1="17"
-          x2="8"
-          y2="17"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <polyline
-          points="10,9 9,9 8,9"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-      </svg>
-      <h2 class="blog-empty-title">No blogs found</h2>
-      <p class="blog-empty-description">
-        {{
-          searchQuery || currentCategory !== "All"
-            ? "Try adjusting your search or filters"
-            : "Check back later for new content"
-        }}
-      </p>
-    </div>
+    <!-- Blog List -->
+    <section class="w-full mb-16">
+      <div class="mb-4">
+        <h2 class="section-title text-black" style="font-family: Poppins">
+          All blogs
+        </h2>
+      </div>
 
-    <!-- Pagination -->
-    <PageNavigation
-      v-if="totalPages > 1 && !loading"
-      :current-page="currentPage"
-      :total-pages="totalPages"
-      @page-change="handlePageChange"
-    />
+      <!-- Cards Grid -->
+      <div v-if="paginatedBlogs.length > 0" class="flex flex-col gap-12 mb-16">
+        <BlogCard
+          v-for="blog in paginatedBlogs"
+          :key="blog.id || blog._id"
+          :blog="blog"
+          :delete="isAuthorized"
+          @click="handleBlogClick"
+          @read-more="handleBlogClick"
+          @handleDelete="handleDeleteBlog"
+        />
+      </div>
 
-    <AppFooter />
+      <!-- Empty State -->
+      <div v-else class="flex justify-center items-center min-h-80">
+        <div class="text-center max-w-96">
+          <div class="text-6xl mb-4 opacity-50">📰</div>
+          <h3 class="text-2xl font-semibold text-gray-600 mb-2">
+            No blogs found
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Try adjusting your search or filter criteria
+          </p>
+          <button
+            @click="clearAllFilters"
+            class="bg-primary-teal text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-teal-dark transition-colors"
+          >
+            Clear all filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-4" v-if="totalPages > 1">
+        <Pagination
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @goto="goToPage"
+          @next="nextPage"
+          @prev="prevPage"
+        />
+      </div>
+    </section>
   </div>
+
+  <Footer />
 </template>
 
 <script>
-import { AppHeader, AppFooter, BlogCard, PageNavigation } from "../components";
+import axios from "axios";
+import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
+import FilterDropdown from "../components/FilterDropdown.vue";
+import BlogCard from "../components/BlogCard.vue";
+import SearchBar from "../components/SearchBar.vue";
+import Pagination from "../components/Pagination.vue";
+import { useAuthStore } from "../store/auth.store";
+import axiosInstance from "../utils/axiosInstance.js";
 
 export default {
   name: "Blog",
   components: {
-    AppHeader,
-    AppFooter,
+    Header,
+    Footer,
+    FilterDropdown,
     BlogCard,
-    PageNavigation,
+    SearchBar,
+    Pagination,
   },
   data() {
     return {
-      loading: false,
       searchQuery: "",
-      currentSort: "newest",
-      currentCategory: "All",
+      selectedCategory: "All categories",
+      sortByNewest: true,
       currentPage: 1,
-      blogsPerPage: 9,
-      blogs: [
-        {
-          id: 1,
-          title: "Getting Started with Vue.js 3: A Comprehensive Guide",
-          excerpt:
-            "Learn the fundamentals of Vue.js 3 and how to build modern web applications with the Composition API.",
-          content: "Vue.js 3 brings many exciting features...",
-          author: "Sarah Johnson",
-          date: "2024-01-15",
-          category: "Development",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog1.jpg",
-          comments: 24,
-          readTime: 8,
-        },
-        {
-          id: 2,
-          title: "The Future of Web Development: Trends to Watch in 2024",
-          excerpt:
-            "Explore the latest trends and technologies shaping the future of web development.",
-          content: "The web development landscape continues to evolve...",
-          author: "Mike Chen",
-          date: "2024-01-12",
-          category: "Technology",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog2.jpg",
-          comments: 18,
-          readTime: 6,
-        },
-        {
-          id: 3,
-          title: "Building Responsive Layouts with CSS Grid and Flexbox",
-          excerpt:
-            "Master the art of creating flexible and responsive web layouts using modern CSS techniques.",
-          content: "CSS Grid and Flexbox are powerful layout tools...",
-          author: "Emily Rodriguez",
-          date: "2024-01-10",
-          category: "Design",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog3.jpg",
-          comments: 31,
-          readTime: 10,
-        },
-        {
-          id: 4,
-          title: "JavaScript ES2024: New Features and Updates",
-          excerpt:
-            "Discover the latest JavaScript features and how they can improve your development workflow.",
-          content: "ECMAScript 2024 introduces several new features...",
-          author: "David Kim",
-          date: "2024-01-08",
-          category: "Development",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog4.jpg",
-          comments: 15,
-          readTime: 7,
-        },
-        {
-          id: 5,
-          title: "UX Design Principles for Better User Engagement",
-          excerpt:
-            "Learn essential UX design principles that can help create more engaging user experiences.",
-          content: "Good UX design is crucial for user engagement...",
-          author: "Lisa Park",
-          date: "2024-01-05",
-          category: "Design",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog5.jpg",
-          comments: 22,
-          readTime: 9,
-        },
-        {
-          id: 6,
-          title: "Optimizing Web Performance: Tips and Best Practices",
-          excerpt:
-            "Improve your website's performance with these proven optimization techniques and strategies.",
-          content: "Web performance optimization is essential...",
-          author: "Tom Wilson",
-          date: "2024-01-03",
-          category: "Performance",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog6.jpg",
-          comments: 27,
-          readTime: 12,
-        },
-        {
-          id: 7,
-          title: "Introduction to TypeScript for JavaScript Developers",
-          excerpt:
-            "Get started with TypeScript and learn how it can improve your JavaScript development experience.",
-          content: "TypeScript adds static typing to JavaScript...",
-          author: "Anna Martinez",
-          date: "2024-01-01",
-          category: "Development",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog7.jpg",
-          comments: 19,
-          readTime: 8,
-        },
-        {
-          id: 8,
-          title: "Modern CSS: Custom Properties and Logical Properties",
-          excerpt:
-            "Explore the power of CSS custom properties and logical properties for more maintainable styles.",
-          content: "CSS custom properties revolutionize styling...",
-          author: "James Brown",
-          date: "2023-12-28",
-          category: "Design",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog8.jpg",
-          comments: 16,
-          readTime: 6,
-        },
-        {
-          id: 9,
-          title: "API Design Best Practices for Modern Applications",
-          excerpt:
-            "Learn how to design robust and scalable APIs that provide great developer experience.",
-          content: "Well-designed APIs are the backbone...",
-          author: "Rachel Green",
-          date: "2023-12-25",
-          category: "Technology",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog9.jpg",
-          comments: 33,
-          readTime: 11,
-        },
-        {
-          id: 10,
-          title: "Mobile-First Design: Creating Better Mobile Experiences",
-          excerpt:
-            "Understand the importance of mobile-first design and how to implement it effectively.",
-          content: "Mobile-first design is more important than ever...",
-          author: "Alex Turner",
-          date: "2023-12-22",
-          category: "Design",
-          image: "https://cdn.builder.io/api/v1/image/assets/TEMP/blog10.jpg",
-          comments: 21,
-          readTime: 9,
-        },
-      ],
-      sortOptions: [
-        { label: "Newest", value: "newest" },
-        { label: "Oldest", value: "oldest" },
-        { label: "Most Popular", value: "popular" },
-        { label: "Title A-Z", value: "title-asc" },
-        { label: "Title Z-A", value: "title-desc" },
+      itemsPerPage: 5,
+      loading: false,
+
+      blogs: [],
+
+      categoryOptions: [
+        "All categories",
+        "Technology",
+        "Tutorial",
+        "Opinion",
+        "News",
       ],
     };
-  },
-  computed: {
-    categories() {
-      const uniqueCategories = [
-        ...new Set(this.blogs.map((blog) => blog.category)),
-      ];
-      return ["All", ...uniqueCategories.sort()];
-    },
-    filteredBlogs() {
-      let filtered = [...this.blogs];
-
-      // Apply search filter
-      if (this.searchQuery.trim()) {
-        const query = this.searchQuery.toLowerCase().trim();
-        filtered = filtered.filter(
-          (blog) =>
-            blog.title.toLowerCase().includes(query) ||
-            blog.excerpt.toLowerCase().includes(query) ||
-            blog.author.toLowerCase().includes(query) ||
-            blog.category.toLowerCase().includes(query),
-        );
-      }
-
-      // Apply category filter
-      if (this.currentCategory !== "All") {
-        filtered = filtered.filter(
-          (blog) => blog.category === this.currentCategory,
-        );
-      }
-
-      // Apply sorting
-      filtered.sort((a, b) => {
-        switch (this.currentSort) {
-          case "newest":
-            return new Date(b.date) - new Date(a.date);
-          case "oldest":
-            return new Date(a.date) - new Date(b.date);
-          case "popular":
-            return b.comments - a.comments;
-          case "title-asc":
-            return a.title.localeCompare(b.title);
-          case "title-desc":
-            return b.title.localeCompare(a.title);
-          default:
-            return 0;
-        }
-      });
-
-      return filtered;
-    },
-    totalPages() {
-      return Math.ceil(this.filteredBlogs.length / this.blogsPerPage);
-    },
-    paginatedBlogs() {
-      const start = (this.currentPage - 1) * this.blogsPerPage;
-      const end = start + this.blogsPerPage;
-      return this.filteredBlogs.slice(start, end);
-    },
-  },
-  watch: {
-    searchQuery() {
-      this.currentPage = 1;
-    },
-    currentCategory() {
-      this.currentPage = 1;
-    },
-    currentSort() {
-      this.currentPage = 1;
-    },
   },
   mounted() {
     this.loadBlogs();
   },
+  computed: {
+    isAuthorized() {
+      const { state } = useAuthStore();
+      return (
+        state.user &&
+        (state.user.role === "admin" || state.user.role === "member")
+      );
+    },
+
+    filteredBlogs() {
+      let list = [...this.blogs];
+
+      // search
+      if (this.searchQuery) {
+        const q = this.searchQuery.toLowerCase();
+        list = list.filter((b) => b.title.toLowerCase().includes(q));
+      }
+
+      // category
+      if (this.selectedCategory !== "All categories") {
+        list = list.filter((b) => b.category === this.selectedCategory);
+      }
+
+      // sort
+      list = list.sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.date);
+        const dateB = new Date(b.createdAt || b.date);
+        return this.sortByNewest ? dateB - dateA : dateA - dateB;
+      });
+
+      return list;
+    },
+    totalPages() {
+      return Math.ceil(this.filteredBlogs.length / this.itemsPerPage);
+    },
+    paginatedBlogs() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredBlogs.slice(start, start + this.itemsPerPage);
+    },
+  },
   methods: {
     async loadBlogs() {
       this.loading = true;
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      this.loading = false;
+      try {
+        const res = await axios.get("http://localhost:8000/api/posts");
+        this.blogs = res.data;
+      } catch (e) {
+        console.error("Failed to load blogs", e);
+        // Show error to user
+        this.$toast.error("Failed to load blog posts");
+      } finally {
+        this.loading = false;
+      }
     },
-    handleSearch() {
-      // Search is handled by the computed property
-      // This method can be used for debouncing in the future
+
+    handleCreateBlog() {
+      this.$router.push("/blog/create");
     },
-    handleSort(sortValue) {
-      this.currentSort = sortValue;
+
+    async handleDeleteBlog(blogId) {
+      await axiosInstance.delete(`/posts/${blogId}`);
+      this.loadBlogs();
     },
-    handleCategoryFilter(category) {
-      this.currentCategory = category;
+    clearAllFilters() {
+      this.searchQuery = "";
+      this.selectedCategory = "All categories";
     },
-    handlePageChange(page) {
+    toggleSort() {
+      this.sortByNewest = !this.sortByNewest;
+    },
+    handleSearch(q) {
+      this.searchQuery = q;
+      this.currentPage = 1;
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToPage(page) {
       this.currentPage = page;
-      // Scroll to top when page changes
-      window.scrollTo({ top: 0, behavior: "smooth" });
     },
-    handleBlogClick(blog) {
-      // Navigate to blog detail page
-      this.$router.push(`/blog/${blog.id}`);
+    handleBlogClick(event, blog) {
+      // Only navigate if the click wasn't on a button or link
+      if (!event.target.closest("button, a")) {
+        this.$router.push(`/blog/${blog._id || blog.id}`);
+      }
     },
   },
 };

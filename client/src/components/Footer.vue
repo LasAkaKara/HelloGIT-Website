@@ -9,19 +9,11 @@
           class="mx-4"
           aria-label="facebook"
         >
-          <img
-            class="w-auto max-h-16"
-            src="../../public/icons/facebook.png"
-            alt=""
-          />
+          <img class="w-auto max-h-16" src="/icons/facebook.png" alt="" />
         </a>
 
         <a href="https://zalo.me/g/josmny701" class="mx-4" aria-label="zalo">
-          <img
-            class="w-auto max-h-16"
-            src="../../public/icons/zalo.png"
-            alt=""
-          />
+          <img class="w-auto max-h-16" src="/icons/zalo.png" alt="" />
         </a>
 
         <a
@@ -29,28 +21,20 @@
           class="mx-4"
           aria-label="discord"
         >
-          <img
-            class="w-auto max-h-16"
-            src="../../public/icons/discord.png"
-            alt=""
-          />
+          <img class="w-auto max-h-16" src="/icons/discord.png" alt="" />
         </a>
       </div>
       <div id="logo" class="flex flex-row items-center space-x-10">
-        <img
-          class="w-auto max-h-30"
-          src="../../public/icons/greenwich_logo.png"
-          alt=""
-        />
+        <img class="w-auto max-h-30" src="/icons/greenwich_logo.png" alt="" />
         <div class="flex flex-col items-center">
           <img
             class="max-h-14 w-auto sm:max-h-14 object-contain"
-            src="../../public/icons/logo.png"
+            src="/icons/logo.png"
             alt=""
           />
           <img
             class="wmax-h-8 mx-1 w-auto sm:max-h-8 object-contain"
-            src="../../public/icons/name.png"
+            src="/icons/name.png"
             alt=""
           />
         </div>
