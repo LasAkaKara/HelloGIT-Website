@@ -595,6 +595,16 @@ export default {
     this.loadLatestEvents();
   },
 
+  watch: {
+    "$route.params": {
+      handler() {
+        this.loadEvent();
+        window.scrollTo(0, 0);
+      },
+      immediate: true,
+    },
+  },
+
   methods: {
     async loadEvent() {
       try {

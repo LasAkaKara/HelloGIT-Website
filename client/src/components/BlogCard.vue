@@ -6,7 +6,7 @@
     <!-- Image Container -->
     <div class="w-full lg:w-[827px] h-64 lg:h-[433px] relative">
       <img
-        src="../../public/images/fullstack_confidence.png"
+        :src="blog.imageUrl || '/images/blog_placeholder.jpg'"
         :alt="blog.title"
         class="w-full h-full object-cover rounded-[20px]"
         @error="handleImageError"
@@ -98,7 +98,7 @@
           style="
             font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
           "
-          @click.stop="handleReadMore"
+          @click.stop="$emit('handleReadMore', blog)"
         >
           <span>Read More</span>
           <span class="arrow">→</span>
@@ -143,15 +143,12 @@ export default {
       default: false,
     },
   },
-  emits: ["click", "read-more"],
+  emits: ["click", "handleReadMore", "handleDelete"],
   methods: {
     handleClick() {
       if (this.clickable) {
         this.$emit("click", this.blog);
       }
-    },
-    handleReadMore() {
-      this.$emit("read-more", this.blog);
     },
     handleImageError(event) {
       event.target.src = "https://via.placeholder.com/827x433?text=Blog+Image";

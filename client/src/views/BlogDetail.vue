@@ -596,7 +596,7 @@ export default {
     },
 
     navigateToPost(postId) {
-      this.$router.push(`/blogs/${postId}`);
+      this.$router.push(`/blog/${postId}`);
     },
 
     submitComment() {
@@ -669,6 +669,15 @@ export default {
     this.loadPost();
     this.loadRecentPosts();
     this.initializeComments();
+  },
+  watch: {
+    "$route.params": {
+      handler() {
+        this.loadPost();
+        window.scrollTo(0, 0);
+      },
+      immediate: true,
+    },
   },
 };
 </script>

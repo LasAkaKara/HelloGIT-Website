@@ -5,8 +5,8 @@
       :class="[
         'flex items-center justify-between w-full h-full px-3 sm:px-4 py-2 rounded-3xl border transition-all',
         'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
-        variant === 'primary' 
-          ? 'bg-primary-blue text-white border-primary-blue hover:bg-primary-blue-dark' 
+        variant === 'primary'
+          ? 'bg-primary-blue text-white border-primary-blue hover:bg-primary-blue-dark'
           : 'bg-white text-primary-blue border-primary-blue hover:bg-gray-50',
       ]"
     >
@@ -21,20 +21,16 @@
         />
 
         <!-- Label -->
-        <span class="text-sm sm:text-base font-medium whitespace-nowrap" style="font-family: Poppins">
+        <span
+          class="text-sm sm:text-base font-medium whitespace-nowrap"
+          style="font-family: Poppins"
+        >
           {{ selectedValue || label }}
         </span>
       </div>
 
       <!-- Dropdown Arrow -->
-      <svg
-        class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        :class="{ 'rotate-180': isOpen, 'text-white': variant === 'primary' }"
-      >
-        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-      </svg>
+      <img src="/icons/arrow_down.png" alt="arrow_down" class="w-4 h-4" />
     </button>
 
     <!-- Dropdown Menu -->
@@ -94,12 +90,12 @@ export default {
     },
     iconSrc: {
       type: String,
-      default: '',
+      default: "",
     },
     variant: {
       type: String,
-      default: 'secondary',
-      validator: (value) => ['primary', 'secondary'].includes(value),
+      default: "secondary",
+      validator: (value) => ["primary", "secondary"].includes(value),
     },
     icon: {
       type: String,

@@ -19,22 +19,7 @@
           v-if="modelValue"
           @click="clearSearch"
           class="p-1 text-gray-400 hover:text-gray-600 mr-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000s/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+        ></button>
         <button
           @click="$emit('search', modelValue)"
           class="p-1 text-primary-blue hover:text-blue-700 transition-colors"
@@ -52,23 +37,23 @@
 
 <script>
 export default {
-  name: 'SearchBar',
+  name: "SearchBar",
   props: {
     modelValue: {
       type: String,
-      default: ''
+      default: "",
     },
     placeholder: {
       type: String,
-      default: 'Search...'
-    }
+      default: "Search...",
+    },
   },
-  emits: ['update:modelValue', 'search'],
+  emits: ["update:modelValue", "search"],
   methods: {
     clearSearch() {
-      this.$emit('update:modelValue', '');
-      this.$emit('search', '');
-    }
-  }
+      this.$emit("update:modelValue", "");
+      this.$emit("search", "");
+    },
+  },
 };
 </script>

@@ -14,11 +14,8 @@ export function filteredEvents({
   // Filter by search query
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
-    filtered = filtered.filter(
-      (event) =>
-        event.title.toLowerCase().includes(q) ||
-        event.location.toLowerCase().includes(q) ||
-        (event.shortDesc && event.shortDesc.toLowerCase().includes(q))
+    filtered = filtered.filter((event) =>
+      event.title.toLowerCase().includes(q)
     );
   }
 

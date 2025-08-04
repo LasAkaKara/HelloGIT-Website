@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 import Admin from "../views/admin.vue";
 import Home from "../views/Home.vue";
 import Event from "../views/Event.vue";
@@ -25,6 +26,7 @@ const routes = [
   // { path: "/about", component: AboutUs },
   { path: "/typography", component: Typography },
   { path: "/login", component: Login },
+  { path: "/register", component: Register },
   { path: "/admin", component: Admin, meta: { requiresAdmin: true } },
 ];
 
@@ -39,7 +41,7 @@ router.beforeEach((to, from, next) => {
     if (!role) return next("/login");
     if (role !== "admin") return next("/");
   }
-  
+
   // Check for authenticated routes (any logged-in user)
   if (to.meta?.requiresAuth) {
     if (!role) return next("/login");

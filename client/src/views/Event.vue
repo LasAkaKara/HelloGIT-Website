@@ -17,81 +17,6 @@
       Create Event
     </button>
 
-    <!-- Search and Filter Section -->
-    <section class="w-full mb-8">
-      <!-- Search and Sort Row -->
-      <div class="flex flex-col md:flex-row gap-4 w-full mb-4">
-        <!-- Search Bar -->
-        <SearchBar
-          v-model="searchQuery"
-          placeholder="Search events"
-          @search="handleSearch"
-        />
-
-        <!-- Sort Button -->
-        <button
-          @click="toggleSort"
-          class="h-12 md:h-14 px-4 md:px-6 rounded-3xl border border-primary-blue flex items-center justify-center gap-2 whitespace-nowrap transition-colors"
-          :class="
-            sortByDate
-              ? 'bg-primary-blue text-white'
-              : 'bg-white text-primary-blue'
-          "
-        >
-          <span class="text-sm md:text-base lg:text-lg">Sort by date</span>
-          <img
-            src="/icons/sort.png"
-            alt="sort"
-            class="w-4 h-4 md:w-5 md:h-5"
-            :class="{ 'rotate-180': sortByDate }"
-          />
-        </button>
-      </div>
-
-      <!-- Filter Dropdowns Row -->
-      <div class="flex flex-wrap gap-3 w-full">
-        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
-          <FilterDropdown
-            v-model="selectedDateFilter"
-            :options="dateOptions"
-            :label="selectedDateFilter === 'Any day' ? 'Date' : ''"
-            :icon-src="
-              selectedDateFilter === 'Any day' ? '/icons/calendar.png' : ''
-            "
-            variant="secondary"
-          />
-        </div>
-
-        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
-          <FilterDropdown
-            v-model="selectedTypeFilter"
-            :options="uniqueEventTypes"
-            :label="selectedTypeFilter === 'Any type' ? 'Type' : ''"
-            :icon-src="
-              selectedTypeFilter === 'Any type' ? '/icons/chat.png' : ''
-            "
-            variant="secondary"
-          />
-        </div>
-
-        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
-          <FilterDropdown
-            v-model="selectedOrganizerFilter"
-            :options="organizerOptions"
-            :label="
-              selectedOrganizerFilter === 'Any organizer' ? 'Organizer' : ''
-            "
-            :icon-src="
-              selectedOrganizerFilter === 'Any organizer'
-                ? '/icons/user.png'
-                : ''
-            "
-            variant="secondary"
-          />
-        </div>
-      </div>
-    </section>
-
     <!-- Featured Event Section  -->
     <section class="px-8 mb-16 w-full">
       <div class="mb-4">
@@ -177,6 +102,78 @@
               >
             </button>
           </div>
+        </div>
+      </div>
+    </section>
+    <!-- Search and Filter Section -->
+    <section class="w-full mb-8">
+      <!-- Search and Sort Row -->
+      <div class="flex flex-col md:flex-row gap-4 w-full mb-4">
+        <!-- Search Bar -->
+        <SearchBar
+          v-model="searchQuery"
+          placeholder="Search events"
+          @search="handleSearch"
+        />
+
+        <!-- Sort Button -->
+        <button
+          @click="toggleSort"
+          class="h-12 md:h-14 px-4 md:px-6 rounded-3xl border border-primary-blue flex items-center justify-center gap-2 whitespace-nowrap transition-colors"
+          :class="
+            sortByDate ? 'bg-primary text-white' : 'bg-white text-primary-blue'
+          "
+        >
+          <span class="text-sm md:text-base lg:text-lg">Sort by date</span>
+          <img
+            src="/icons/sort.png"
+            alt="sort"
+            class="w-4 h-4 md:w-5 md:h-5"
+            :class="{ 'rotate-180': sortByDate }"
+          />
+        </button>
+      </div>
+
+      <!-- Filter Dropdowns Row -->
+      <div class="flex flex-wrap gap-3 w-full">
+        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
+          <FilterDropdown
+            v-model="selectedDateFilter"
+            :options="dateOptions"
+            :label="selectedDateFilter === 'Any day' ? 'Date' : ''"
+            :icon-src="
+              selectedDateFilter === 'Any day' ? '/icons/calendar.png' : ''
+            "
+            variant="secondary"
+          />
+        </div>
+
+        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
+          <FilterDropdown
+            v-model="selectedTypeFilter"
+            :options="uniqueEventTypes"
+            :label="selectedTypeFilter === 'Any type' ? 'Type' : ''"
+            :icon-src="
+              selectedTypeFilter === 'Any type' ? '/icons/chat.png' : ''
+            "
+            variant="secondary"
+          />
+        </div>
+
+        <div class="w-full sm:w-auto flex-1 min-w-[120px]">
+          <FilterDropdown
+            v-model="selectedOrganizerFilter"
+            :options="organizerOptions"
+            :label="
+              selectedOrganizerFilter === 'Any organizer' ? 'Organizer' : ''
+            "
+            :icon-src="
+              selectedOrganizerFilter === 'Any organizer'
+                ? '/icons/user.png'
+                : ''
+            "
+            variant="secondary"
+          />
         </div>
       </div>
     </section>
@@ -408,16 +405,13 @@ export default {
       this.$router.push(`/event/${eventId}`);
     },
 
-    handleReadMore(event) {
-      // Navigate to event detail page for featured event
-      console.log("Read more clicked:", event);
+    handleRegister(event) {
+      console.log("Register clicked:", event);
       const eventId = event._id || event.id || "featured";
       this.$router.push(`/event/${eventId}`);
     },
-
-    handleRegister(event) {
-      // Navigate to event detail page for registration
-      console.log("Register clicked:", event);
+    handleReadMore(event) {
+      console.log("Read more clicked:", event);
       const eventId = event._id || event.id || "featured";
       this.$router.push(`/event/${eventId}`);
     },
@@ -437,12 +431,6 @@ export default {
       this.selectedTypeFilter = "Any type";
       this.selectedOrganizerFilter = "Any organizer";
       this.sortByDate = false;
-    },
-
-    handleSearch(query) {
-      // Debounce could be added here if needed
-      this.searchQuery = query;
-      console.log("Search query:", query);
     },
 
     async loadEvents() {

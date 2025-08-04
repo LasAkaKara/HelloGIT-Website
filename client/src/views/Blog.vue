@@ -81,7 +81,7 @@
           :blog="blog"
           :delete="isAuthorized"
           @click="handleBlogClick"
-          @read-more="handleBlogClick"
+          @handleReadMore="handleBlogClick"
           @handleDelete="handleDeleteBlog"
         />
       </div>
@@ -252,11 +252,8 @@ export default {
     goToPage(page) {
       this.currentPage = page;
     },
-    handleBlogClick(event, blog) {
-      // Only navigate if the click wasn't on a button or link
-      if (!event.target.closest("button, a")) {
-        this.$router.push(`/blog/${blog._id || blog.id}`);
-      }
+    handleBlogClick(blog) {
+      this.$router.push(`/blog/${blog._id || blog.id}`);
     },
   },
 };
