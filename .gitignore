@@ -1,3 +1,9 @@
 server/node_modules/
+server/token.json
+server/credentials.json
+server/generate_token.js
+server/server2.js
+server/test_oauth.js
+server/test_sheet.js
 client/node_modules/
 .config/
