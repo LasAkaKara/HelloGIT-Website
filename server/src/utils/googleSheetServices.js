@@ -2,7 +2,6 @@
 import { google } from "googleapis";
 import fs from "fs/promises";
 
-const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 const CREDENTIALS_PATH = "./credentials.json";
 const TOKEN_PATH = "./token.json";
 

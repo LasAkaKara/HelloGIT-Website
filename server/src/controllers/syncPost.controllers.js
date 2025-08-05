@@ -1,4 +1,3 @@
-// controllers/syncPost.controllers.js
 import {
   authorizeGoogle,
   fetchParsedSheet,
@@ -7,19 +6,17 @@ import Post from "../models/post.models.js";
 
 export const syncPostsFromSheet = async (req, res) => {
   try {
-    console.log("🔍 Step 1: Starting sync...");
-
     const auth = await authorizeGoogle();
-    console.log("✅ Step 2: Authorized with Google");
+    console.log("Google Authorized");
 
     const spreadsheetId = "1M_ysaqEcruLL-52xV_tx5smdAd2KWTnYSjm5OKZzeVA";
     const range = "Sheet1!A1:L"; // Include headers now
 
     const parsedRows = await fetchParsedSheet(auth, spreadsheetId, range);
-    console.log("✅ Step 3: Parsed rows:", parsedRows.length);
+    console.log("Step 3: Parsed rows:", parsedRows.length);
 
     if (!parsedRows.length) {
-      console.log("⚠️ No rows to sync.");
+      console.log("No rows to sync.");
       return res.status(404).send("No valid data found.");
     }
 
@@ -42,7 +39,7 @@ export const syncPostsFromSheet = async (req, res) => {
       // Skip if required fields are missing
       if (!title || !body || !summary || !category || !date) {
         console.warn(
-          "⛔ Skipping row due to missing fields:",
+          "Skipping row due to missing fields:",
           title || "(no title)"
         );
         continue;
@@ -51,7 +48,7 @@ export const syncPostsFromSheet = async (req, res) => {
       // Avoid inserting duplicate posts
       const exists = await Post.findOne({ title });
       if (exists) {
-        console.log("ℹ️ Post already exists:", title);
+        console.log("Post already exists:", title);
         continue;
       }
 
@@ -68,13 +65,13 @@ export const syncPostsFromSheet = async (req, res) => {
         createdAt: createdAt ? new Date(createdAt) : undefined,
       });
 
-      console.log("📝 Created post:", title);
+      console.log("Created post:", title);
       createdCount++;
     }
 
     return res.status(200).send(`✅ Synced ${createdCount} new post(s).`);
   } catch (err) {
-    console.error("🛑 Sync error:", err.message);
+    console.error("Sync error:", err.message);
     return res.status(500).send("Failed to sync posts.");
   }
 };
